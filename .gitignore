@@ -1,0 +1,6 @@
+.envrc
+.terraform*
+api-key-*.txt
+*.tfstate
+*.tfstate.backup
+.idea

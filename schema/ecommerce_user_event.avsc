@@ -1,0 +1,31 @@
+{
+  "doc": "ecommerce event tracking schema.",
+  "fields": [
+    {
+      "doc": "unique device id",
+      "name": "deviceId",
+      "type": "string"
+    },
+    {
+      "default": null,
+      "doc": "time that the event occurred (epoch time in ms).",
+      "name": "timestamp",
+      "type": [
+        "null",
+        "long"
+      ]
+    },
+    {
+      "default": null,
+      "doc": "previous url of the page",
+      "name": "previousUrl",
+      "type": [
+        "null",
+        "string"
+      ]
+    }
+  ],
+  "name": "EcommerceUserEvent",
+  "namespace": "com.midwesttape.analytics",
+  "type": "record"
+}
