@@ -1,7 +1,7 @@
-# 1.1 sample - a few more CC environments
+# 1.2 sample - making a few more CC environments with terragrunt
 
-This is another example of a CC environment that can be used as a starting 
-point to learn how to do things better (everything can be done better, right?).
+This is an example of how to create multiple CC environments that can be used 
+as a starting point to build out a real usable set of environments.
 
 In this version, we are creating multiple environments that each have:
 - a single kafka cluster (with a service account and API keys)
@@ -9,49 +9,13 @@ In this version, we are creating multiple environments that each have:
 - a single topic
 - a single schema
 
-This is a bit more useful, but still pretty simple.
-
 ## this iteration...
 
-In this iteration, we created a development environment using terragrunt.
+In this iteration, we created a test and production environments using terragrunt.
 
 ### what did we do?
 
-Let's start with the directory structure:
 
-```shell
-├── global.hcl
-├── development
-│   ├── confluent-cloud
-│   │   └── terragrunt.hcl
-│   └── development.hcl
-└── modules
-    └── tf-confluent-cloud
-        ├── main.tf
-        ├── outputs.tf
-        ├── schema
-        │   └── ecommerce_user_event.avsc
-        └── variables.tf
-```
-
-We created some `terragrunt.hcl` files in the project that we use to defines 
-our environments. There are 3 levels of this configuration:
-
-- /global.hcl
-- /development/development.hcl
-- /development/confluent-cloud/terragrunt.hcl
-
-The top level file describes things that are global to all of our environments. 
-Some examples of that are:
-- where is our state file stored? 
-- what region are we in?
-- what providers do we need?
-
-The next level down describes things that are common to all of our development 
-environments. At this point, that's just the name of the environment.
-
-Finally, the lowest level describes things that are specific to our confluent 
-cloud development environment. 
 
 > NOTE: I use AWS, but you can use whatever you want. If you come up with a 
 > clever way to do this in another cloud (azure of gcp), please let me know! I 

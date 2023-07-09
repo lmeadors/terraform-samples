@@ -3,7 +3,7 @@ locals {
   # variables defined here are only visible in this file; if you want to pass
   # them along to  subsequent configuration files below this one, include them
   # in the inputs below.
-  environment = "development"
+  environment = "production"
 }
 
 inputs = {
