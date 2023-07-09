@@ -18,7 +18,6 @@ data "confluent_schema_registry_region" "this" {
   package = "ESSENTIALS"
 }
 
-
 resource "confluent_environment" "this" {
   display_name = "demo"
 }
