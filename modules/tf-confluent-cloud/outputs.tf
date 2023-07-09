@@ -1,5 +1,4 @@
-/*
-output "demo" {
+output "cloud-config" {
   value = <<-EOT
   kafka_cluster {
     id = "${confluent_kafka_cluster.this.id}"
@@ -18,8 +17,7 @@ output "demo" {
     key    = "${confluent_api_key.schema_registry.id}"
     secret = "${confluent_api_key.schema_registry.secret}"
   }
-
   EOT
   sensitive = true
 }
-*/
+
