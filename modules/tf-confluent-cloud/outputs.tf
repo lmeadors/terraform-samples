@@ -1,3 +1,4 @@
+/*
 output "demo" {
   value = <<-EOT
   kafka_cluster {
@@ -21,3 +22,4 @@ output "demo" {
   EOT
   sensitive = true
 }
+*/

@@ -2,7 +2,7 @@ terraform {
   required_providers {
     confluent = {
       source  = "confluentinc/confluent"
-      version = "1.43.0"
+      version = "1.48.0"
     }
   }
 }
@@ -14,20 +14,20 @@ provider "confluent" {
 
 data "confluent_schema_registry_region" "this" {
   cloud   = "AWS"
-  region  = "us-east-2"
-  package = "ESSENTIALS"
+  region  = var.schema_registry_config.region
+  package = var.schema_registry_config.package
 }
 
 resource "confluent_environment" "this" {
-  display_name = "demo"
+  display_name = var.environment
 }
 
 resource "confluent_kafka_cluster" "this" {
 
-  availability = "SINGLE_ZONE"
+  availability = var.kafka_cluster_config.availability
   cloud        = "AWS"
-  display_name = "sample"
-  region       = "us-west-2"
+  display_name = "main"
+  region       = var.kafka_cluster_config.region
 
   basic {
     # if it is free, it is for me...
@@ -40,7 +40,7 @@ resource "confluent_kafka_cluster" "this" {
 }
 
 resource "confluent_schema_registry_cluster" "this" {
-  package = "ESSENTIALS"
+  package = var.schema_registry_config.package
   environment {
     id = confluent_environment.this.id
   }
@@ -50,7 +50,7 @@ resource "confluent_schema_registry_cluster" "this" {
 }
 
 resource "confluent_service_account" "this" {
-  display_name = "demo-service-account"
+  display_name = "${var.environment}-service-account"
 }
 
 resource "confluent_role_binding" "kafka_broker" {
@@ -73,8 +73,8 @@ resource "confluent_role_binding" "schema_registry" {
 }
 
 resource "confluent_api_key" "kafka_broker" {
-  display_name = "demo-api-key"
-  description  = "demo api key"
+  display_name = "${var.environment}-api-key-broker"
+  description  = "${var.environment} api key for kafka broker"
   owner {
     api_version = confluent_service_account.this.api_version
     id          = confluent_service_account.this.id
@@ -94,8 +94,8 @@ resource "confluent_api_key" "kafka_broker" {
 }
 
 resource "confluent_api_key" "schema_registry" {
-  display_name = "sr-key-demo"
-  description  = "service account for demo schema registry"
+  display_name = "${var.environment}-api-key-sr"
+  description  = "${var.environment} service account for schema registry"
   owner {
     id          = confluent_service_account.this.id
     api_version = confluent_service_account.this.api_version
@@ -114,11 +114,11 @@ resource "confluent_api_key" "schema_registry" {
 }
 
 locals {
-  topic_name   = "topic-01"
+  topic_name   = "user_event"
   subject_name = "${local.topic_name}-value"
 }
 
-resource "confluent_kafka_topic" "demo" {
+resource "confluent_kafka_topic" "user_event" {
 
   kafka_cluster {
     id = confluent_kafka_cluster.this.id
@@ -154,7 +154,7 @@ resource "confluent_schema" "user_event" {
   subject_name = local.subject_name
 
   depends_on = [
-    confluent_kafka_topic.demo,
+    confluent_kafka_topic.user_event,
     confluent_service_account.this,
     confluent_role_binding.kafka_broker,
     confluent_role_binding.schema_registry,
