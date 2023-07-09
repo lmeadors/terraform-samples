@@ -4,12 +4,14 @@
 # contains settings that are common across all components in the development
 # environment.
 
-include "root" {
-  path = find_in_parent_folders()
+include "global" {
+  path = find_in_parent_folders("global.hcl")
+  expose = true
 }
 
 include "development" {
-  path = "${dirname(find_in_parent_folders())}/development/development.hcl"
+  path = find_in_parent_folders("development.hcl")
+  expose = true
 }
 
 terraform {
@@ -19,11 +21,11 @@ terraform {
 inputs = {
   # schema registry region and package to use
   schema_registry_config = {
-    region  = "us-east-2"
+    region  = include.global.inputs.aws_region
     package = "ESSENTIALS"
   }
   kafka_cluster_config= {
-    region  = "us-east-2"
+    region  = include.global.inputs.aws_region
     availability = "SINGLE_ZONE"
   }
 }

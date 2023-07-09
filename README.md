@@ -13,25 +13,53 @@ This is a bit more useful, but still pretty simple.
 
 ## this iteration...
 
-In this iteration, we created a development environments using terragrunt:
+In this iteration, we created a development environment using terragrunt.
 
 ### what did we do?
 
-We created a `global.hcl` file in the root of the project that defines the 
-global settings to be shared by all environments.
+Let's start with the directory structure:
 
-When you use TG, the goal is to reduce the amount of redundancy in your code, 
-this global file helps us do that better.
+```shell
+├── global.hcl
+├── development
+│   ├── confluent-cloud
+│   │   └── terragrunt.hcl
+│   └── development.hcl
+└── modules
+    └── tf-confluent-cloud
+        ├── main.tf
+        ├── outputs.tf
+        ├── schema
+        │   └── ecommerce_user_event.avsc
+        └── variables.tf
+```
 
-For example, we want all of our environments to have the same AWS region, so 
-we put that in the global file.
+We created some `terragrunt.hcl` files in the project that we use to defines 
+our environments. There are 3 levels of this configuration:
+
+- /global.hcl
+- /development/development.hcl
+- /development/confluent-cloud/terragrunt.hcl
+
+The top level file describes things that are global to all of our environments. 
+Some examples of that are:
+- where is our state file stored? 
+- what region are we in?
+- what providers do we need?
+
+The next level down describes things that are common to all of our development 
+environments. At this point, that's just the name of the environment.
+
+Finally, the lowest level describes things that are specific to our confluent 
+cloud development environment. 
 
 > NOTE: I use AWS, but you can use whatever you want. If you come up with a 
 > clever way to do this in another cloud (azure of gcp), please let me know! I 
 > would love to incorporate it into this work.
 
-In each 
-
 ## up next...
 
-In our next iteration...I don't know, we'll do more things and stuff.
+In our next iteration...more environments!
+
+We will add test and production environments. We will also add a few more 
+variables for those environments for things like partition counts and the like.
