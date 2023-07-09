@@ -15,7 +15,15 @@ In this iteration, we created a test and production environments using terragrun
 
 ### what did we do?
 
+Surprisingly little! This is what has made me a believer in terragrunt.
 
+To create the test environment, I created a `test` directory and copied the 
+`development/environment.hcl` file into it. Then I changed the `environment` 
+value from "development" to "test". 
+
+Next, I create a `test/confluent-cloud` directory and copied the 
+`development/confluent-cloud/terragrunt.hcl` file into it. No changes were 
+needed to it yet.
 
 > NOTE: I use AWS, but you can use whatever you want. If you come up with a 
 > clever way to do this in another cloud (azure of gcp), please let me know! I 

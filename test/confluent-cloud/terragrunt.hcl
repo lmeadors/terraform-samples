@@ -10,7 +10,7 @@ include "global" {
 }
 
 include "environment" {
-  path = find_in_parent_folders("test.hcl")
+  path = find_in_parent_folders("environment.hcl")
   expose = true
 }
 
