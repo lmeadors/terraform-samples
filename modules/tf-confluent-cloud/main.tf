@@ -130,7 +130,7 @@ resource "confluent_kafka_topic" "user_event" {
   }
 
   topic_name       = local.topic_name
-  partitions_count = 1
+  partitions_count = var.user_event_topic_config.partitions_count
 
   depends_on = [
     confluent_service_account.this,

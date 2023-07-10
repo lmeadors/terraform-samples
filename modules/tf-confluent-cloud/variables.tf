@@ -16,3 +16,7 @@ variable "schema_registry_config" {
 variable "kafka_cluster_config" {
   type = map(string)
 }
+
+variable "user_event_topic_config" {
+  type = map(string)
+}

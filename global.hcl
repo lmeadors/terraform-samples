@@ -4,6 +4,9 @@ locals {
 
 inputs = {
   aws_region = local.aws_region
+  user_event_topic_config = {
+    partitions_count = 1
+  }
 }
 
 # Generate an AWS provider block

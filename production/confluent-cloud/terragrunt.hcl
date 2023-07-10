@@ -19,13 +19,20 @@ terraform {
 }
 
 inputs = {
+
   # schema registry region and package to use
   schema_registry_config = {
     region  = include.global.inputs.aws_region
     package = "ESSENTIALS"
   }
+
   kafka_cluster_config= {
     region  = include.global.inputs.aws_region
     availability = "SINGLE_ZONE"
   }
+
+  user_event_topic_config = {
+    partitions_count = 10
+  }
+
 }

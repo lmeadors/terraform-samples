@@ -25,6 +25,25 @@ Next, I create a `test/confluent-cloud` directory and copied the
 `development/confluent-cloud/terragrunt.hcl` file into it. No changes were 
 needed to it yet.
 
+Now, lets say that I want to create a production environment. I would copy the 
+same files and make the same changes, but what if I want to change the 
+partition count of my topic to 10 instead of 1 ... but only in production?
+
+My module doesn't allow that yet, but it is easy to add. I just need to add a 
+variable in my module and then set it in the appropriate files:
+
+- modules/tf-confluent-cloud/variables.tf
+    - define the variable here
+- modules/tf-confluent-cloud/main.tf
+    - use the value here
+- global.hcl
+    - set the default value here
+- production/confluent-cloud/terragrunt.hcl
+    - set the production specific value here
+
+Now, when I run `terragrunt apply` in the production directory, it will use the value 10; in all other
+environments, it will use the default value of 1.
+
 > NOTE: I use AWS, but you can use whatever you want. If you come up with a 
 > clever way to do this in another cloud (azure of gcp), please let me know! I 
 > would love to incorporate it into this work.
