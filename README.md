@@ -17,9 +17,20 @@ In this iteration, we created a test and production environments using terragrun
 
 Surprisingly little! This is what has made me a believer in terragrunt.
 
-To create the test environment, I created a `test` directory and copied the 
-`development/environment.hcl` file into it. Then I changed the `environment` 
-value from "development" to "test". 
+```shell
+├── global.hcl
+├── development
+│   ├── confluent-cloud
+│   │   └── terragrunt.hcl
+│   └── environment.hcl
+└── modules
+    └── tf-confluent-cloud
+        ├── main.tf
+        ├── outputs.tf
+        ├── schema
+        │   └── ecommerce_user_event.avsc
+        └── variables.tf
+```
 
 Next, I create a `test/confluent-cloud` directory and copied the 
 `development/confluent-cloud/terragrunt.hcl` file into it. No changes were 
