@@ -24,7 +24,7 @@ Let's start with the directory structure:
 ├── development
 │   ├── confluent-cloud
 │   │   └── terragrunt.hcl
-│   └── development.hcl
+│   └── environment.hcl
 └── modules
     └── tf-confluent-cloud
         ├── main.tf
